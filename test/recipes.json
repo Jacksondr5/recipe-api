@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "name": "Green Beans",
+        "thumbnail": "file/path",
+        "description": "yummy and crispy",
+        "link": [
+            "chicken recipe",
+            "mashed potats"
+        ],
+        "metadata": {
+            "lastViewed": "5/3/2003",
+            "created": "3/3/2003",
+            "timeToCook": "20 min"
+        },
+        "ingredients": [
+            "garlic",
+            "green beans",
+            "olive oil"
+        ],
+        "steps": {
+            "step1": "bake them",
+            "step2": "use garlic"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Chicken",
+        "thumbnail": "file/path",
+        "description": "soft and crispy",
+        "link": [
+            "green bean recipe",
+            "spinach salad"
+        ],
+        "metadata": {
+            "lastViewed": "3/6/2004",
+            "created": "6/23/2005",
+            "timeToCook": "40 min"
+        },
+        "ingredients": [
+            "honey",
+            "chicken",
+            "butter"
+        ],
+        "steps": {
+            "step1": "fry it",
+            "step2": "use honey and butter"
+        }
+    },
+    {
+        "id": 3,
+        "name": "Stekkie",
+        "thumbnail": "file/path",
+        "description": "yummy and juicy",
+        "link": [
+            "chicken recipe",
+            "kale"
+        ],
+        "metadata": {
+            "lastViewed": "5/3/2003",
+            "created": "3/3/2003",
+            "timeToCook": "34 min"
+        },
+        "ingredients": [
+            "garlic",
+            "onions",
+            "olive oil"
+        ],
+        "steps": {
+            "step1": "grill 'em",
+            "step2": "don't be a scrub"
+        }
+    }
+]
