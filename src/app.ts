@@ -103,12 +103,12 @@ app.delete('/recipe', async function(req, res) {
 });
 
 //update a recipe by id
-app.patch('/recipe/update', async function(req,res) {
+app.patch('/recipe', async function(req,res) {
     try{
         const recipeId = req.query.id;
         const recipeInt = +recipeId;
         await recipeModel.updateOne({ id: `${recipeInt}`}, req.body);
-        res.status(201).json(req.body);
+        res.status(200).json(req.body);
     }
     catch (error) {
         res.status(400).json({message: error.message})
