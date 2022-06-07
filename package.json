@@ -23,6 +23,6 @@
     "tsoa": "^4.1.0"
   },
   "scripts": {
-    "start": "node dist/server.js"
+    "start": "nodemon src/server.ts"
   }
 }

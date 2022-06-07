@@ -17,7 +17,7 @@ export class RecipeService {
     return {
       id,
       name: "chikin",
-      thumbnail: "path",
+      thumbnail: "path/to/stuff",
       description: "stuff",
       link: ["this", "that"],
       metadata: {
