@@ -4,7 +4,18 @@ export interface Recipe {
   thumbnail: string;
   description: string;
   link: string[];
-  metadata: {};
+  metadata: Metadata;
   ingredients: string[];
-  steps: {};
+  steps: Steps[];
+}
+
+export interface Metadata {
+  lastViewed: string;
+  created: string;
+  timeToCook: string;
+}
+
+export interface Steps {
+  step: number;
+  directions: string;
 }

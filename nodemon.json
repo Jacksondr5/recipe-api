@@ -1,0 +1,7 @@
+{
+    "exec": "yarn build && node -r dotenv/config dist/src/server.js dotenv_config_path=.env.development",
+    "watch": [
+        "src"
+    ],
+    "ext": "ts"
+}
