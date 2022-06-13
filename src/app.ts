@@ -5,6 +5,9 @@ import express, {
 } from "express";
 import path from "path";
 import { ValidateError } from "tsoa";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 type TsoaRoutesModule = {
   RegisterRoutes: Function;

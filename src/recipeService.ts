@@ -1,6 +1,5 @@
 import { Recipe } from "./recipe";
 import mongoose, { Schema } from "mongoose";
-import * as dotenv from "dotenv";
 
 export type RecipeCreationParams = Pick<
   Recipe,
@@ -14,7 +13,6 @@ export type RecipeCreationParams = Pick<
   | "steps"
 >;
 
-dotenv.config();
 const url = process.env.DB_URI;
 
 mongoose.connect(url);
@@ -41,8 +39,7 @@ const recipeModel = mongoose.model("recipes", recipeSchema);
 
 export async function getRecipe(id: number) {
   try {
-    const data = await recipeModel.find({ id: id });
-    return data;
+    return await recipeModel.find({ id: id });
   } catch (error) {
     return { message: error.message };
   }
@@ -50,8 +47,7 @@ export async function getRecipe(id: number) {
 
 export async function getAllRecipe() {
   try {
-    const data = await recipeModel.find();
-    return data;
+    return await recipeModel.find();
   } catch (error) {
     return { message: error.message };
   }
@@ -59,10 +55,9 @@ export async function getAllRecipe() {
 
 export async function searchRecipe(ingredient: string) {
   try {
-    const data = await recipeModel.find({
+    return await recipeModel.find({
       ingredients: { $regex: `(.*)${ingredient}(.*)` },
     });
-    return data;
   } catch (error) {
     return { message: error.message };
   }
