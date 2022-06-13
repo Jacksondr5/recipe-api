@@ -32,7 +32,7 @@ var recipeSchema = new Schema({
   link: [],
   metadata: {},
   ingredients: [],
-  steps: {},
+  steps: [],
 });
 
 const recipeModel = mongoose.model("recipes", recipeSchema);
