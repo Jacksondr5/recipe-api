@@ -39,7 +39,7 @@ const recipeModel = mongoose.model("recipes", recipeSchema);
 
 export async function getRecipe(id: number) {
   try {
-    return await recipeModel.find({ id: id });
+    return await recipeModel.findOne({ id: id });
   } catch (error) {
     return { message: error.message };
   }
