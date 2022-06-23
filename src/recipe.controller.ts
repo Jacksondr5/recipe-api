@@ -69,18 +69,14 @@ export class RecipeController extends Controller {
   @SuccessResponse("201", "Created")
   @Post()
   public async createRec(@Body() requestBody: Recipe) {
-    try {
-      await recipeSchema.validate(requestBody);
-    } catch (error) {
-      this.setStatus(422);
-      return { message: error.message };
-    }
+    await recipeSchema.validate(requestBody);
+
     return createRecipe(requestBody);
   }
 
   @SuccessResponse("202", "Deleted")
   @Delete("{recipeId}")
-  public async deleteRec(@Path() recipeId: number): Promise<{ message: any }> {
+  public async deleteRec(@Path() recipeId: number) {
     return deleteRecipe(recipeId);
   }
 
@@ -90,12 +86,8 @@ export class RecipeController extends Controller {
     @Path() recipeId: number,
     @Body() requestBody: Recipe
   ) {
-    try {
-      await recipeSchema.validate(requestBody);
-    } catch (error) {
-      this.setStatus(422);
-      return { message: error.message };
-    }
+    await recipeSchema.validate(requestBody);
+
     return updateRecipe(recipeId, requestBody);
   }
 }

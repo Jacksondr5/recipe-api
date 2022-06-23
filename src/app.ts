@@ -6,6 +6,7 @@ import express, {
 import path from "path";
 import { ValidateError } from "tsoa";
 import * as dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 
@@ -19,6 +20,11 @@ app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
+  })
+);
+app.use(
+  cors({
+    origin: "http://localhost:3000",
   })
 );
 

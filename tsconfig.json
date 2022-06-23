@@ -9,6 +9,7 @@
     "outDir": "dist",
     "baseUrl": ".",
     "rootDir": ".",
+    "strict": true,
 
     /* Experimental Options */
     "experimentalDecorators": true,
