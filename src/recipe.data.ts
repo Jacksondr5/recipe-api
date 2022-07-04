@@ -38,7 +38,6 @@ export function findAllRecipes(): Promise<Array<Recipe> | null> {
 }
 
 export function searchForRecipe(ingred: string): Promise<Array<Recipe> | null> {
-  console.log(ingred);
   return recipeModel
     .find({ "ingredients.ingredient": { $regex: `(.*)${ingred}(.*)` } })
     .lean()
@@ -53,10 +52,11 @@ export function deleteOneRecipe(id: number) {
   recipeModel.deleteOne({ id: id }).lean().exec();
 }
 
-export function updateOneRecipe(id: number, recipeBody: Recipe) {
-  const data = recipeModel.find({ id: id }).lean().exec();
+export async function updateOneRecipe(id: number, recipeBody: Recipe) {
+  const data = await recipeModel.find({ id: id }).lean().exec();
   if (!data) {
     throw new Error("This ID does not exist");
   }
-  recipeModel.updateOne({ id: id }, recipeBody);
+  recipeModel.updateOne({ id: id }, recipeBody).exec();
+  // recipeModel.findOne({ id: id }).update(recipeBody).exec();
 }

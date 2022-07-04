@@ -27,7 +27,7 @@ let recipeSchema = yup.object().shape({
   id: yup.number().required().positive().integer(),
   name: yup.string().required(),
   thumbnail: yup.object().required().shape({
-    image: yup.string().required(),
+    image: yup.string(),
     show: yup.boolean().required(),
   }),
   description: yup.string().required(),
@@ -39,7 +39,6 @@ let recipeSchema = yup.object().shape({
   }),
   ingredients: yup
     .array()
-    .required()
     .of(
       yup
         .object()
@@ -48,7 +47,8 @@ let recipeSchema = yup.object().shape({
           starred: yup.boolean().required(),
         })
         .required()
-    ),
+    )
+    .required(),
   steps: yup
     .array()
     .of(
