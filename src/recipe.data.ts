@@ -19,7 +19,7 @@ db.once("connected", () => {
 var recipeSchema = new Schema<Recipe>({
   id: Number,
   name: String,
-  thumbnail: String,
+  thumbnail: {},
   description: String,
   link: [],
   metadata: {},
@@ -37,11 +37,10 @@ export function findAllRecipes(): Promise<Array<Recipe> | null> {
   return recipeModel.find().lean().exec();
 }
 
-export function searchForRecipe(
-  ingredient: string
-): Promise<Array<Recipe> | null> {
+export function searchForRecipe(ingred: string): Promise<Array<Recipe> | null> {
+  console.log(ingred);
   return recipeModel
-    .find({ ingredients: { $regex: `(.*)${ingredient}(.*)` } })
+    .find({ "ingredients.ingredient": { $regex: `(.*)${ingred}(.*)` } })
     .lean()
     .exec();
 }

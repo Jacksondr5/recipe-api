@@ -26,7 +26,10 @@ import * as yup from "yup";
 let recipeSchema = yup.object().shape({
   id: yup.number().required().positive().integer(),
   name: yup.string().required(),
-  thumbnail: yup.string().required(),
+  thumbnail: yup.object().required().shape({
+    image: yup.string().required(),
+    show: yup.boolean().required(),
+  }),
   description: yup.string().required(),
   link: yup.array().required().of(yup.string().required()),
   metadata: yup.object().required().shape({
@@ -34,7 +37,18 @@ let recipeSchema = yup.object().shape({
     created: yup.string().required(),
     timeToCook: yup.string().required(),
   }),
-  ingredients: yup.array().required().of(yup.string().required()),
+  ingredients: yup
+    .array()
+    .required()
+    .of(
+      yup
+        .object()
+        .shape({
+          ingredient: yup.string().required(),
+          starred: yup.boolean().required(),
+        })
+        .required()
+    ),
   steps: yup
     .array()
     .of(
