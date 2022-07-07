@@ -3,7 +3,7 @@ import { Recipe } from "./recipe";
 
 const url = process.env.DB_URI;
 
-if (!url) {
+if (!url || url === "undefined") {
   throw new Error("URL is undefined");
 }
 
@@ -58,5 +58,4 @@ export async function updateOneRecipe(id: number, recipeBody: Recipe) {
     throw new Error("This ID does not exist");
   }
   recipeModel.updateOne({ id: id }, recipeBody).exec();
-  // recipeModel.findOne({ id: id }).update(recipeBody).exec();
 }

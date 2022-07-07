@@ -10,6 +10,13 @@ import cors from "cors";
 
 dotenv.config();
 
+const uiUrl = process.env.UI_URL;
+if (!uiUrl || uiUrl === "Undefined") {
+  throw new Error(
+    "The environment variable for the URL for the UI is missing/undefined"
+  );
+}
+
 type TsoaRoutesModule = {
   RegisterRoutes: Function;
 };
@@ -24,7 +31,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: uiUrl,
   })
 );
 
@@ -49,7 +56,6 @@ app.use(function errorHandler(
     });
   }
   if (err instanceof Error) {
-    console.log(Error);
     return res.status(500).json({
       message: err,
     });

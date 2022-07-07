@@ -5,16 +5,15 @@ export interface Recipe {
   description: string;
   link: string[];
   metadata: Metadata;
-  ingredients: Ingredients[];
+  ingredients: Ingredient[];
   steps: Steps[];
 }
 
 export interface Thumbnail {
   image: string;
-  show: boolean;
 }
 
-export interface Ingredients {
+export interface Ingredient {
   ingredient: string;
   starred: boolean;
 }

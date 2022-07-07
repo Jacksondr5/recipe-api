@@ -28,7 +28,6 @@ let recipeSchema = yup.object().shape({
   name: yup.string().required(),
   thumbnail: yup.object().required().shape({
     image: yup.string(),
-    show: yup.boolean().required(),
   }),
   description: yup.string().required(),
   link: yup.array().required().of(yup.string().required()),
