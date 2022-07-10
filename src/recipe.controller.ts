@@ -26,7 +26,9 @@ import * as yup from "yup";
 let recipeSchema = yup.object().shape({
   id: yup.number().required().positive().integer(),
   name: yup.string().required(),
-  thumbnail: yup.string().required(),
+  thumbnail: yup.object().required().shape({
+    image: yup.string(),
+  }),
   description: yup.string().required(),
   link: yup.array().required().of(yup.string().required()),
   metadata: yup.object().required().shape({
@@ -34,7 +36,18 @@ let recipeSchema = yup.object().shape({
     created: yup.string().required(),
     timeToCook: yup.string().required(),
   }),
-  ingredients: yup.array().required().of(yup.string().required()),
+  ingredients: yup
+    .array()
+    .of(
+      yup
+        .object()
+        .shape({
+          ingredient: yup.string().required(),
+          starred: yup.boolean().required(),
+        })
+        .required()
+    )
+    .required(),
   steps: yup
     .array()
     .of(
@@ -69,18 +82,14 @@ export class RecipeController extends Controller {
   @SuccessResponse("201", "Created")
   @Post()
   public async createRec(@Body() requestBody: Recipe) {
-    try {
-      await recipeSchema.validate(requestBody);
-    } catch (error) {
-      this.setStatus(422);
-      return { message: error.message };
-    }
+    await recipeSchema.validate(requestBody);
+
     return createRecipe(requestBody);
   }
 
   @SuccessResponse("202", "Deleted")
   @Delete("{recipeId}")
-  public async deleteRec(@Path() recipeId: number): Promise<{ message: any }> {
+  public async deleteRec(@Path() recipeId: number) {
     return deleteRecipe(recipeId);
   }
 
@@ -90,12 +99,8 @@ export class RecipeController extends Controller {
     @Path() recipeId: number,
     @Body() requestBody: Recipe
   ) {
-    try {
-      await recipeSchema.validate(requestBody);
-    } catch (error) {
-      this.setStatus(422);
-      return { message: error.message };
-    }
+    await recipeSchema.validate(requestBody);
+
     return updateRecipe(recipeId, requestBody);
   }
 }

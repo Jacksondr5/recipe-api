@@ -6,8 +6,16 @@ import express, {
 import path from "path";
 import { ValidateError } from "tsoa";
 import * as dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
+
+const uiUrl = process.env.UI_URL;
+if (!uiUrl || uiUrl === "Undefined") {
+  throw new Error(
+    "The environment variable for the URL for the UI is missing/undefined"
+  );
+}
 
 type TsoaRoutesModule = {
   RegisterRoutes: Function;
@@ -19,6 +27,11 @@ app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
+  })
+);
+app.use(
+  cors({
+    origin: uiUrl,
   })
 );
 
@@ -44,7 +57,7 @@ app.use(function errorHandler(
   }
   if (err instanceof Error) {
     return res.status(500).json({
-      message: "Internal Server Error",
+      message: err,
     });
   }
 
