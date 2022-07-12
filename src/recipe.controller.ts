@@ -56,6 +56,7 @@ let recipeSchema = yup.object().shape({
         .shape({
           step: yup.number().positive().integer().required(),
           directions: yup.string().required(),
+          image: yup.string().required(),
         })
         .required()
     )
