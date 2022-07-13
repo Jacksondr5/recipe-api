@@ -27,5 +27,5 @@ export interface Metadata {
 export interface Steps {
   step: number;
   directions: string;
-  image: string;
+  image?: string;
 }
