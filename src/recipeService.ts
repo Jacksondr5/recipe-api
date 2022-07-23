@@ -4,7 +4,8 @@ import {
   deleteOneRecipe,
   findAllRecipes,
   findOneRecipe,
-  searchForRecipe,
+  searchForRecipeIngredient,
+  searchForRecipeName,
   updateOneRecipe,
 } from "./recipe.data";
 
@@ -20,6 +21,8 @@ export type RecipeCreationParams = Pick<
   | "steps"
 >;
 
+type RecipePreview = Omit<Recipe, "id">;
+
 export async function getRecipe(id: number) {
   return await findOneRecipe(id);
 }
@@ -28,11 +31,15 @@ export async function getAllRecipe() {
   return await findAllRecipes();
 }
 
-export async function searchRecipe(ingredient: string) {
-  return await searchForRecipe(ingredient);
+export async function searchRecipeIngredient(ingredient: string) {
+  return await searchForRecipeIngredient(ingredient);
 }
 
-export async function createRecipe(recipeBody: Recipe) {
+export async function searchRecipeName(name: string) {
+  return await searchForRecipeName(name);
+}
+
+export async function createRecipe(recipeBody: RecipePreview) {
   return await createOneRecipe(recipeBody);
 }
 
