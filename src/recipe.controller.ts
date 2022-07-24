@@ -11,7 +11,7 @@ import {
   SuccessResponse,
 } from "tsoa";
 
-import { Recipe } from "./recipe";
+import { Recipe, RecipePreview } from "./recipe";
 import {
   getRecipe,
   getAllRecipe,
@@ -63,8 +63,6 @@ let recipeSchema = yup.object().shape({
     )
     .required(),
 });
-
-type RecipePreview = Omit<Recipe, "id">;
 
 @Route("recipe")
 export class RecipeController extends Controller {

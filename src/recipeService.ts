@@ -1,4 +1,4 @@
-import { Recipe } from "./recipe";
+import { Recipe, RecipePreview } from "./recipe";
 import {
   createOneRecipe,
   deleteOneRecipe,
@@ -20,8 +20,6 @@ export type RecipeCreationParams = Pick<
   | "ingredients"
   | "steps"
 >;
-
-type RecipePreview = Omit<Recipe, "id">;
 
 export async function getRecipe(id: number) {
   return await findOneRecipe(id);

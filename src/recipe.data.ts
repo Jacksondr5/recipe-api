@@ -1,8 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Recipe } from "./recipe";
-import { emptyRecipe } from "./emptyRecipe";
-
-type RecipePreview = Omit<Recipe, "id">;
+import { Recipe, RecipePreview } from "./recipe";
 
 const url = process.env.DB_URI;
 
@@ -36,22 +33,20 @@ export function findOneRecipe(id: number): Promise<Recipe | null> {
   return recipeModel.findOne({ id: id }).lean().exec();
 }
 
-export function findAllRecipes(): Promise<Array<Recipe> | null> {
+export function findAllRecipes(): Promise<Array<Recipe>> {
   return recipeModel.find().lean().exec();
 }
 
 export function searchForRecipeIngredient(
   ingred: string
-): Promise<Array<Recipe> | null> {
+): Promise<Array<Recipe>> {
   return recipeModel
     .find({ "ingredients.ingredient": { $regex: `(.*)${ingred}(.*)` } })
     .lean()
     .exec();
 }
 
-export function searchForRecipeName(
-  name: string
-): Promise<Array<Recipe> | null> {
+export function searchForRecipeName(name: string): Promise<Array<Recipe>> {
   return recipeModel
     .find({ name: { $regex: `(.*)${name}(.*)`, $options: "i" } })
     .lean()
@@ -60,7 +55,7 @@ export function searchForRecipeName(
 
 export async function createOneRecipe(
   recipeBody: RecipePreview
-): Promise<Recipe | null> {
+): Promise<Recipe> {
   const lastRecipe: Recipe[] = await recipeModel
     .find()
     .sort({ id: -1 })

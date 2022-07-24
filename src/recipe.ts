@@ -29,3 +29,5 @@ export interface Steps {
   directions: string;
   image?: string;
 }
+
+export type RecipePreview = Omit<Recipe, "id">;
