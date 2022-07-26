@@ -11,26 +11,27 @@ import {
   SuccessResponse,
 } from "tsoa";
 
-import { Recipe } from "./recipe";
+import { Recipe, RecipePreview } from "./recipe";
 import {
   getRecipe,
   getAllRecipe,
   createRecipe,
   deleteRecipe,
-  searchRecipe,
+  searchRecipeIngredient,
   updateRecipe,
+  searchRecipeName,
 } from "./recipeService";
 
 import * as yup from "yup";
 
 let recipeSchema = yup.object().shape({
-  id: yup.number().required().positive().integer(),
+  id: yup.number().positive().integer(),
   name: yup.string().required(),
   thumbnail: yup.object().required().shape({
     image: yup.string(),
   }),
   description: yup.string().required(),
-  link: yup.array().required().of(yup.string().required()),
+  link: yup.array().of(yup.string().required()),
   metadata: yup.object().required().shape({
     lastViewed: yup.string().required(),
     created: yup.string().required(),
@@ -75,14 +76,18 @@ export class RecipeController extends Controller {
     return getRecipe(recipeId);
   }
 
-  @Get("search/{ingredient}")
-  public async searchRec(@Path() ingredient: string) {
-    return searchRecipe(ingredient);
+  @Get("search/ingredient/{ingredient}")
+  public async searchRecIngred(@Path() ingredient: string) {
+    return searchRecipeIngredient(ingredient);
+  }
+  @Get("search/name/{name}")
+  public async searchRecName(@Path() name: string) {
+    return searchRecipeName(name);
   }
 
   @SuccessResponse("201", "Created")
   @Post()
-  public async createRec(@Body() requestBody: Recipe) {
+  public async createRec(@Body() requestBody: RecipePreview) {
     await recipeSchema.validate(requestBody);
 
     return createRecipe(requestBody);

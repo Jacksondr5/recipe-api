@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Recipe } from "./recipe";
+import { Recipe, RecipePreview } from "./recipe";
 
 const url = process.env.DB_URI;
 
@@ -33,19 +33,37 @@ export function findOneRecipe(id: number): Promise<Recipe | null> {
   return recipeModel.findOne({ id: id }).lean().exec();
 }
 
-export function findAllRecipes(): Promise<Array<Recipe> | null> {
+export function findAllRecipes(): Promise<Array<Recipe>> {
   return recipeModel.find().lean().exec();
 }
 
-export function searchForRecipe(ingred: string): Promise<Array<Recipe> | null> {
+export function searchForRecipeIngredient(
+  ingred: string
+): Promise<Array<Recipe>> {
   return recipeModel
     .find({ "ingredients.ingredient": { $regex: `(.*)${ingred}(.*)` } })
     .lean()
     .exec();
 }
 
-export function createOneRecipe(recipeBody: Recipe): Promise<Recipe | null> {
-  return new recipeModel(recipeBody).save();
+export function searchForRecipeName(name: string): Promise<Array<Recipe>> {
+  return recipeModel
+    .find({ name: { $regex: `(.*)${name}(.*)`, $options: "i" } })
+    .lean()
+    .exec();
+}
+
+export async function createOneRecipe(
+  recipeBody: RecipePreview
+): Promise<Recipe> {
+  const lastRecipe: Recipe[] = await recipeModel
+    .find()
+    .sort({ id: -1 })
+    .limit(1)
+    .lean();
+
+  const newRecipeBody = { ...recipeBody, id: lastRecipe[0].id + 1 };
+  return new recipeModel(newRecipeBody).save();
 }
 
 export function deleteOneRecipe(id: number) {
