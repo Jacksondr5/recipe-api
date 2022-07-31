@@ -22,48 +22,6 @@ import {
   searchRecipeName,
 } from "./recipeService";
 
-import * as yup from "yup";
-
-let recipeSchema = yup.object().shape({
-  id: yup.number().positive().integer(),
-  name: yup.string().required(),
-  thumbnail: yup.object().required().shape({
-    image: yup.string(),
-  }),
-  description: yup.string().required(),
-  link: yup.array().of(yup.string().required()),
-  metadata: yup.object().required().shape({
-    lastViewed: yup.string().required(),
-    created: yup.string().required(),
-    timeToCook: yup.string().required(),
-  }),
-  ingredients: yup
-    .array()
-    .of(
-      yup
-        .object()
-        .shape({
-          ingredient: yup.string().required(),
-          starred: yup.boolean().required(),
-        })
-        .required()
-    )
-    .required(),
-  steps: yup
-    .array()
-    .of(
-      yup
-        .object()
-        .shape({
-          step: yup.number().positive().integer().required(),
-          directions: yup.string().required(),
-          image: yup.string(),
-        })
-        .required()
-    )
-    .required(),
-});
-
 @Route("recipe")
 export class RecipeController extends Controller {
   @Get()
@@ -88,8 +46,6 @@ export class RecipeController extends Controller {
   @SuccessResponse("201", "Created")
   @Post()
   public async createRec(@Body() requestBody: RecipePreview) {
-    await recipeSchema.validate(requestBody);
-
     return createRecipe(requestBody);
   }
 
@@ -105,8 +61,6 @@ export class RecipeController extends Controller {
     @Path() recipeId: number,
     @Body() requestBody: Recipe
   ) {
-    await recipeSchema.validate(requestBody);
-
     return updateRecipe(recipeId, requestBody);
   }
 }

@@ -1,21 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { Recipe, RecipePreview } from "./recipe";
 
-const url = process.env.DB_URI;
-
-if (!url || url === "undefined") {
-  throw new Error("URL is undefined");
-}
-
-mongoose.connect(url);
-const db = mongoose.connection;
-db.on("error", (error) => {
-  console.log(error);
-});
-db.once("connected", () => {
-  console.log("Database Connected");
-});
-
 var recipeSchema = new Schema<Recipe>({
   id: Number,
   name: String,
@@ -67,13 +52,9 @@ export async function createOneRecipe(
 }
 
 export function deleteOneRecipe(id: number) {
-  recipeModel.deleteOne({ id: id }).lean().exec();
+  return recipeModel.deleteOne({ id: id }).lean().exec();
 }
 
 export async function updateOneRecipe(id: number, recipeBody: Recipe) {
-  const data = await recipeModel.find({ id: id }).lean().exec();
-  if (!data) {
-    throw new Error("This ID does not exist");
-  }
-  recipeModel.updateOne({ id: id }, recipeBody).exec();
+  return recipeModel.updateOne({ id: id }, recipeBody).exec();
 }
