@@ -1,0 +1,10 @@
+{
+  "organizationId": "12345",
+  "signerEmail": "test@email.com",
+  "signerName": "Test User",
+  "user": {
+    "userId": "test",
+    "oktaUserId": "test",
+    "businessPartnerId": "test"
+  }
+}
